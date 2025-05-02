@@ -1,4 +1,5 @@
 using Currencey.Api.Database;
+using Currencey.Api.Repository;
 
 namespace Currencey.Api;
 
@@ -9,6 +10,12 @@ public static class ServiceExtensions
         services.AddSingleton<IDbConnectionFactory>(new NpgsDbConnectionFactory(connectionString));
         services.AddSingleton<DBInitializer>();
         
+        return services;
+    }
+
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<ICurrencyRepository, CurrencyRepository>();
         return services;
     }
     
