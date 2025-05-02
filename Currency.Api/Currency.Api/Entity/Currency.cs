@@ -1,0 +1,10 @@
+namespace Currencey.Api.Entity;
+
+public class Currency
+{
+    public string id { get; set; }
+    public string name { get; set; }
+    public string symbol { get; set; } 
+    public decimal rate { get; set; }
+    public DateTime update_at { get; set; }
+}
