@@ -20,7 +20,7 @@ public class DBInitializer
                                                 id VARCHAR(3) PRIMARY KEY,
                                                 name VARCHAR(50) NOT NULL,
                                                 symbol VARCHAR(5) NOT NULL,
-                                                rate NUMERIC(4, 2) NOT NULL,
+                                                amount NUMERIC(4, 2) NOT NULL,
                                                 update_at TIMESTAMP WITH TIME ZONE NOT NULL
         );
         
@@ -28,7 +28,7 @@ public class DBInitializer
         DO $$
         BEGIN
             IF NOT EXISTS (SELECT 1 FROM currency) THEN
-                INSERT INTO currency (id, name, symbol, rate, update_at)
+                INSERT INTO currency (id, name, symbol, amount, update_at)
                 VALUES
                     ('USD', 'United States Dollar', '$', 1.00, NOW() + INTERVAL '2 hours'),
                     ('EUR', 'Euro', '€', 0.85, NOW() + INTERVAL '2 hours'),
@@ -42,7 +42,7 @@ public class DBInitializer
                                       Create Table IF NOT EXISTS currency_history (
                                           id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
                                           currency_id VARCHAR(3) NOT NULL,
-                                          rate NUMERIC(4, 2) NOT NULL,
+                                          amount NUMERIC(4, 2) NOT NULL,
                                           create_at TIMESTAMP With Time Zone NOT NULL,
                                           FOREIGN KEY (currency_id) REFERENCES currency(id)
                                       );
@@ -62,8 +62,8 @@ public class DBInitializer
                                           RETURNS TRIGGER AS $$
                                       BEGIN
                                           -- Add your logic here. For example, log changes.
-                                          INSERT INTO currency_history (currency_id, rate, create_at)
-                                          VALUES (NEW.id, NEW.rate, NOW() + INTERVAL '2 hour');
+                                          INSERT INTO currency_history (currency_id, amount, create_at)
+                                          VALUES (NEW.id, NEW.amount, NOW() + INTERVAL '2 hour');
                                           RETURN NEW;
                                       END;
                                       $$ LANGUAGE plpgsql;
