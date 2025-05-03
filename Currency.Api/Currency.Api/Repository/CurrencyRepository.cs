@@ -18,7 +18,7 @@ public class CurrencyRepository : ICurrencyRepository
         using var connection = await _db.CreateConnectionAsync(cancellationToken);
         return await connection.ExecuteAsync(new CommandDefinition("""
                                                                    UPDATE currency Set amount = @amount,
-                                                                                       update_at = now() + interval ' hour'
+                                                                                       update_at = now() + interval '2 hour'
                                                                    WHERE id = @id
                                                                    """, new {id, amount},cancellationToken: cancellationToken)) > 0;
 
