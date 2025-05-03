@@ -30,9 +30,8 @@ public class DBInitializer
             IF NOT EXISTS (SELECT 1 FROM currency) THEN
                 INSERT INTO currency (id, name, symbol, amount, update_at)
                 VALUES
-                    ('USD', 'United States Dollar', '$', 1.00, NOW() + INTERVAL '2 hours'),
-                    ('EUR', 'Euro', '€', 0.85, NOW() + INTERVAL '2 hours'),
-                    ('GBP', 'British Pound Sterling', '£', 0.75, NOW() + INTERVAL '2 hours');
+                    ('USD', 'دولارامريكي', '$', 7.11, NOW() + INTERVAL '2 hours'),
+                    ('EUR', 'يورو', '€', 7.92, NOW() + INTERVAL '2 hours');
             END IF;
         END;
         $$;

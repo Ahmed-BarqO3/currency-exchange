@@ -18,7 +18,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Currency.Contact\Currency.Contact\Currency.Contact.csproj" />
+      <ProjectReference Include="..\Currency.Contact\Currency.Contact.csproj" />
     </ItemGroup>
+
+    
 
 </Project>
