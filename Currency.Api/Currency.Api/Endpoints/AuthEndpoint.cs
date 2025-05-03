@@ -4,6 +4,7 @@ using System.Text.Json;
 using Currencey.Contact;
 using Currencey.Contact.Requset;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,9 +15,16 @@ public static class AuthEndpoint
     public static void MapAuth(this IEndpointRouteBuilder app)
     {
         app.MapPost(ApiRoute.login, CreateToken);
+        app.MapPost(ApiRoute.logout, Logout);
     }
     
-    static async Task<IResult> CreateToken(IConfiguration config,LoginRequset request,bool useCookie = default,CancellationToken cancellationToken = default)
+    static  Task<IResult> Logout(HttpContext context,CancellationToken cancellationToken = default)
+    {
+        context.Response.Cookies.Delete("X-Auth-Token");
+        return Task.FromResult(Results.NoContent());
+    }
+    
+    static  Task<IResult> CreateToken(IConfiguration config,LoginRequset request,HttpContext context,bool useCookie = default,CancellationToken cancellationToken = default)
     {
         var token = new JsonWebTokenHandler();
         var key = config["Jwt:Key"];
@@ -55,18 +63,16 @@ public static class AuthEndpoint
         
         if (useCookie)
         {
-            var httpContext = new DefaultHttpContext();
-            httpContext.Response.Cookies.Append("X-Auth-Token", jwt,new CookieOptions()
+            context.Response.Cookies.Append("X-Auth-Token", jwt,new CookieOptions()
             {
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTimeOffset.UtcNow.AddHours(1)
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
             });
-            
-            return Results.Ok();
+            return Task.FromResult(Results.Ok());
         }
-        return Results.Ok(jwt);
+        return Task.FromResult(Results.Ok(jwt));
     }
     
 }
