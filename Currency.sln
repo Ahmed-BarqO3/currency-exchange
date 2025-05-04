@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency.Api", "Currency.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency.Contact", "Currency.Contact\Currency.Contact.csproj", "{0349F9BD-E350-4C7B-8F3E-B115B0F5E2C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency.Blazor", "Currency.Blazor\Currency.Blazor.csproj", "{4B356723-4938-4ADB-B195-B330DDE99866}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency.Wasm", "Currency.Wasm\Currency.Wasm.csproj", "{DAE9A865-0188-4CC2-A820-048EA5C17C78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{0349F9BD-E350-4C7B-8F3E-B115B0F5E2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0349F9BD-E350-4C7B-8F3E-B115B0F5E2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0349F9BD-E350-4C7B-8F3E-B115B0F5E2C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B356723-4938-4ADB-B195-B330DDE99866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B356723-4938-4ADB-B195-B330DDE99866}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B356723-4938-4ADB-B195-B330DDE99866}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B356723-4938-4ADB-B195-B330DDE99866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE9A865-0188-4CC2-A820-048EA5C17C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE9A865-0188-4CC2-A820-048EA5C17C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE9A865-0188-4CC2-A820-048EA5C17C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE9A865-0188-4CC2-A820-048EA5C17C78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

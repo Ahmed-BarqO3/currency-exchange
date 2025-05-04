@@ -56,9 +56,10 @@ builder.Services.AddAuthentication(i =>
 });
 builder.Services.AddCors(builder =>
 {
-    builder.AddPolicy("AllowAll", options =>
+    builder.AddDefaultPolicy( options =>
     {
-        options.AllowAnyOrigin()
+        options.WithOrigins("https://localhost:7126")
+            .AllowCredentials()
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
@@ -91,7 +92,7 @@ await dbInitializer.InitializeAsync();
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAll");
+app.UseCors();
 app.UseOutputCache();
 
 app.UseAuthentication();

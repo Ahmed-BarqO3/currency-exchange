@@ -1,4 +1,4 @@
-﻿namespace Currency.Blazor.Models;
+﻿namespace Currency.Wasm.Models;
 
 
 public class AuthResult

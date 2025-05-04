@@ -1,5 +1,6 @@
 ﻿using Currencey.Contact.Requset;
-namespace Currency.Blazor.Models;
+
+namespace Currency.Wasm.Models;
 
 public interface IAccountManagment
 {
