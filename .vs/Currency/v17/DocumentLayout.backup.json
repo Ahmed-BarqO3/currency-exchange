@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\AHMED\\Desktop\\Currency\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.blazor\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|solutionrelative:currency.blazor\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{6B93C94F-2023-469F-B3F3-221ECEBEFCB1}|Currency.Api\\Currency.Api.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B93C94F-2023-469F-B3F3-221ECEBEFCB1}|Currency.Api\\Currency.Api.csproj|solutionrelative:currency.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.blazor\\identity\\cookiehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|solutionrelative:currency.blazor\\identity\\cookiehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DAE9A865-0188-4CC2-A820-048EA5C17C78}|Currency.Wasm\\Currency.Wasm.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.wasm\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{DAE9A865-0188-4CC2-A820-048EA5C17C78}|Currency.Wasm\\Currency.Wasm.csproj|solutionrelative:currency.wasm\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.blazor\\identity\\cookieauthenticationstateprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|solutionrelative:currency.blazor\\identity\\cookieauthenticationstateprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DAE9A865-0188-4CC2-A820-048EA5C17C78}|Currency.Wasm\\Currency.Wasm.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.wasm\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DAE9A865-0188-4CC2-A820-048EA5C17C78}|Currency.Wasm\\Currency.Wasm.csproj|solutionrelative:currency.wasm\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.blazor\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|solutionrelative:currency.blazor\\wwwroot\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.blazor\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|solutionrelative:currency.blazor\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DAE9A865-0188-4CC2-A820-048EA5C17C78}|Currency.Wasm\\Currency.Wasm.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.wasm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DAE9A865-0188-4CC2-A820-048EA5C17C78}|Currency.Wasm\\Currency.Wasm.csproj|solutionrelative:currency.wasm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B356723-4938-4ADB-B195-B330DDE99866}|Currency.Blazor\\Currency.Blazor.csproj|c:\\users\\ahmed\\desktop\\currency\\currency.blazor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,80 +66,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Home.razor",
-              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Components\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "Currency.Blazor\\Components\\Pages\\Home.razor",
-              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Components\\Pages\\Home.razor",
-              "RelativeToolTip": "Currency.Blazor\\Components\\Pages\\Home.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-04T15:20:06.706Z",
+              "DocumentIndex": 1,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Wasm\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Currency.Wasm\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Wasm\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Currency.Wasm\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-04T21:02:58.291Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CookieHandler.cs",
-              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Identity\\CookieHandler.cs",
-              "RelativeDocumentMoniker": "Currency.Blazor\\Identity\\CookieHandler.cs",
-              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Identity\\CookieHandler.cs",
-              "RelativeToolTip": "Currency.Blazor\\Identity\\CookieHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Currency.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Api\\Program.cs",
+              "RelativeToolTip": "Currency.Api\\Program.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAF8AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T15:18:31.206Z",
+              "WhenOpened": "2025-05-04T21:00:31.601Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CookieAuthenticationStateProvider.cs",
-              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Identity\\CookieAuthenticationStateProvider.cs",
-              "RelativeDocumentMoniker": "Currency.Blazor\\Identity\\CookieAuthenticationStateProvider.cs",
-              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Identity\\CookieAuthenticationStateProvider.cs",
-              "RelativeToolTip": "Currency.Blazor\\Identity\\CookieAuthenticationStateProvider.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAQwEIAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:58:21.847Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Program.cs",
-              "RelativeDocumentMoniker": "Currency.Blazor\\Program.cs",
-              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Program.cs",
-              "RelativeToolTip": "Currency.Blazor\\Program.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAABsAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T13:44:01.418Z",
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Wasm\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "Currency.Wasm\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Wasm\\Pages\\Home.razor",
+              "RelativeToolTip": "Currency.Wasm\\Pages\\Home.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-04T20:59:32.525Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Login.razor",
-              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Components\\Pages\\Login.razor",
-              "RelativeDocumentMoniker": "Currency.Blazor\\Components\\Pages\\Login.razor",
-              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Components\\Pages\\Login.razor",
-              "RelativeToolTip": "Currency.Blazor\\Components\\Pages\\Login.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-04T13:27:01.947Z",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Program.cs",
+              "RelativeDocumentMoniker": "Currency.Blazor\\Program.cs",
+              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\Program.cs",
+              "RelativeToolTip": "Currency.Blazor\\Program.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T20:55:22.977Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "app.css",
-              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\wwwroot\\app.css",
-              "RelativeDocumentMoniker": "Currency.Blazor\\wwwroot\\app.css",
-              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Blazor\\wwwroot\\app.css",
-              "RelativeToolTip": "Currency.Blazor\\wwwroot\\app.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-05-04T13:24:45.947Z",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Wasm\\Program.cs",
+              "RelativeDocumentMoniker": "Currency.Wasm\\Program.cs",
+              "ToolTip": "C:\\Users\\AHMED\\Desktop\\Currency\\Currency.Wasm\\Program.cs",
+              "RelativeToolTip": "Currency.Wasm\\Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T20:54:16.074Z",
               "EditorCaption": ""
             }
           ]
