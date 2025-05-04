@@ -1,9 +1,11 @@
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using Currencey.Api.Entity;
+using Currencey.Api.Repository;
 using Currencey.Contact;
 using Currencey.Contact.Requset;
-using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -16,15 +18,30 @@ public static class AuthEndpoint
     {
         app.MapPost(ApiRoute.login, CreateToken);
         app.MapPost(ApiRoute.logout, Logout);
+        app.MapGet(ApiRoute.currentUser, GetUser)
+            .RequireAuthorization();
     }
+
+
+
+    static async Task<Results<Ok<User>, NotFound>> GetUser(this ClaimsPrincipal claims,HttpContext http,[FromServices]IUserRepository userRepository, CancellationToken token = default)
+    {
+        var username = http.User.Claims.FirstOrDefault(c=>c.Type == JwtRegisteredClaimNames.Name)?.Value;
+        if (string.IsNullOrEmpty(username))
+            return TypedResults.NotFound();
+        
+        var user = await userRepository.GetByUsernameAsync(username, token);
+        return TypedResults.Ok(user);
+    }
+    
     
     static  Task<IResult> Logout(HttpContext context,CancellationToken cancellationToken = default)
     {
-        context.Response.Cookies.Delete("X-Auth-Token");
+        context.Response.Cookies.Delete("X-Access-Token");
         return Task.FromResult(Results.NoContent());
     }
     
-    static  Task<IResult> CreateToken(IConfiguration config,LoginRequset request,HttpContext context,bool useCookie = default,CancellationToken cancellationToken = default)
+    static  Task<IResult> CreateToken(IConfiguration config,LoginRequset request,HttpContext context,CancellationToken cancellationToken = default)
     {
         var token = new JsonWebTokenHandler();
         var key = config["Jwt:Key"];
@@ -32,7 +49,7 @@ public static class AuthEndpoint
         var claims = new List<Claim>
         {
             new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new (JwtRegisteredClaimNames.PreferredUsername, request.username),
+            new (JwtRegisteredClaimNames.Name, request.username),
         };
 
         foreach (var claim in request.CustomClaims)
@@ -61,18 +78,13 @@ public static class AuthEndpoint
 
         var jwt = token.CreateToken(tokenDescriptor);
         
-        if (useCookie)
-        {
-            context.Response.Cookies.Append("X-Auth-Token", jwt,new CookieOptions()
+            context.Response.Cookies.Append("X-Access-Token", jwt,new CookieOptions()
             {
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
-                Expires = DateTimeOffset.UtcNow.AddDays(7)
             });
             return Task.FromResult(Results.Ok());
-        }
-        return Task.FromResult(Results.Ok(jwt));
     }
     
 }

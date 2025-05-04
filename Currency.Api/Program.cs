@@ -1,14 +1,10 @@
 using System.Text;
-using System.Text.Unicode;
 using Currencey.Api;
 using Currencey.Api.Database;
 using Currencey.Api.Endpoints;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
-using SystemClock = Microsoft.Extensions.Internal.SystemClock;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,24 +14,18 @@ builder.Services.AddOpenApi();
 builder.Services.AddDataBase(config.GetConnectionString("NpgsDb")!);
 builder.Services.AddRepositories();
 
-builder.Services.AddAuthentication(options =>
+builder.Services.AddAuthentication(i =>
 {
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddCookie(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.SameSite = SameSiteMode.Strict;
-    options.Cookie.Name = "X-Auth-Token";
-    options.ExpireTimeSpan = TimeSpan.FromDays(7);
-    options.SlidingExpiration = true;
+    i.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    i.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    i.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    i.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+
 }).AddJwtBearer(x =>
-{
+{ 
     x.RequireHttpsMetadata = false;
     x.SaveToken = true;
-    x.TokenValidationParameters = new ()
+    x.TokenValidationParameters = new()
     {
         ValidateIssuer = true,
         ValidateAudience = true,
@@ -44,15 +34,39 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = config["Jwt:Issuer"],
         ValidAudience = config["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!)),
-        
-        
+
         ClockSkew = TimeSpan.Zero
     };
+
+    x.Events = new();
+    x.Events.OnMessageReceived = context => {
+       
+            if (string.IsNullOrEmpty(context.Token))
+            {
+                context.Token = context.Request.Cookies["X-Access-Token"];
+            }
+            return Task.CompletedTask;
+    };
+}).AddCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.IsEssential = true;
+
+});
+builder.Services.AddCors(builder =>
+{
+    builder.AddPolicy("AllowAll", options =>
+    {
+        options.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
 });
 
-builder.Services.AddOutputCache(o=>
+builder.Services.AddOutputCache(o =>
 {
-    o.AddBasePolicy(c=>c.Cache());
+    o.AddBasePolicy(c => c.Cache());
     o.AddPolicy("currencyCache", c =>
     {
         c.Cache();
@@ -74,8 +88,10 @@ if (app.Environment.IsDevelopment())
 var dbInitializer = app.Services.GetRequiredService<DBInitializer>();
 await dbInitializer.InitializeAsync();
 
+
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll");
 app.UseOutputCache();
 
 app.UseAuthentication();

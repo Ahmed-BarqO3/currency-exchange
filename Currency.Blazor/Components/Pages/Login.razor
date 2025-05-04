@@ -1,0 +1,57 @@
+﻿@page "/login"
+@using Currencey.Contact.Requset
+@using Currency.Blazor.Models
+
+@inject IAccountManagment Account
+@inject NavigationManager Nav
+
+@code{
+	[SupplyParameterFromForm]
+	LoginRequset requset { get; set; } 
+
+	bool isLoading = false;
+
+	async Task handelSubmit()
+	{
+		var response = await Account.LoingAsync(requset);
+
+		if(response.Succeede)
+		{
+			isLoading = true;
+			Nav.NavigateTo("/");
+		}
+
+	}
+
+	protected override void OnInitialized() => requset??=new();
+	
+
+}
+
+<main class="main-content">
+	<div class="auth-container">
+		<div class="auth-card glass-card">
+			<h1 class="auth-title">تسجيل الدخول</h1>
+
+			<EditForm  FormName="login" Model="requset" OnSubmit="handelSubmit" class="auth-form">
+				<div class="form-group">
+					<label class="form-label">اسم المستخدم</label>
+					<InputText @bind-Value="requset.username" type="text" id="username" class="form-input" required/>
+				</div>
+
+				<div class="form-group">
+					<label for="password" class="form-label">كلمة المرور</label>
+					<InputText @bind-Value="requset.password" type="password" id="password" class="form-input" required/>
+				</div>
+
+				<button type="submit" class="btn-primary auth-submit">تسجيل الدخول</button>
+			</EditForm>
+
+		</div>
+	</div>
+</main>
+
+
+
+
+
