@@ -1,9 +1,126 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div class="logo">
+            <span class="logo-text">Libyan Currency Vista</span>
+          </div>
+          <nav class="nav">
+            <ul class="nav-list">
+              <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+              <li><a href="profile.html" class="nav-link">الملف الشخصي</a></li>
+            </ul>
+          </nav>
+          <div class="auth">
+            <div class="user-menu">
+              <div class="user-icon" id="userMenuBtn">
+                <i data-lucide="user-round"></i>
+              </div>
+              <div class="dropdown-menu" id="userDropdown">
+                <a href="profile.html" class="dropdown-item">
+                  <i data-lucide="user"></i>
+                  الملف الشخصي
+                </a>
+                <a href="change-password.html" class="dropdown-item">
+                  <i data-lucide="lock"></i>
+                  تغيير كلمة المرور
+                </a>
+                <a href="login.html" class="dropdown-item logout">
+                  <i data-lucide="log-out"></i>
+                  تسجيل الخروج
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="admin-container">
+          <div class="admin-panel">
+            <div class="admin-header">
+              <h1 class="admin-title">
+                <i data-lucide="settings" class="admin-icon"></i>
+                <span class="text-gradient-primary">تعديل أسعار العملات</span>
+              </h1>
+              <p class="admin-subtitle">قم بتعديل أسعار العملات مقابل الدينار الليبي</p>
+            </div>
+
+            <div class="currency-editor">
+              <!-- USD -->
+              <div class="currency-edit-item">
+                <div class="currency-info">
+                  <span class="currency-flag">🇺🇸</span>
+                  <div class="currency-details">
+                    <h3 class="currency-name">الدولار الأمريكي</h3>
+                    <p class="currency-code">USD</p>
+                  </div>
+                </div>
+                <div class="currency-rate-input">
+                  <span class="currency-symbol">$</span>
+                  <input type="number" min="0" step="0.01" value="4.85" class="rate-input" id="usd-rate">
+                </div>
+              </div>
+
+              <!-- EUR -->
+              <div class="currency-edit-item">
+                <div class="currency-info">
+                  <span class="currency-flag">🇪🇺</span>
+                  <div class="currency-details">
+                    <h3 class="currency-name">اليورو</h3>
+                    <p class="currency-code">EUR</p>
+                  </div>
+                </div>
+                <div class="currency-rate-input">
+                  <span class="currency-symbol">€</span>
+                  <input type="number" min="0" step="0.01" value="5.25" class="rate-input" id="eur-rate">
+                </div>
+              </div>
+
+              <!-- GBP -->
+              <div class="currency-edit-item">
+                <div class="currency-info">
+                  <span class="currency-flag">🇬🇧</span>
+                  <div class="currency-details">
+                    <h3 class="currency-name">الجنيه الإسترليني</h3>
+                    <p class="currency-code">GBP</p>
+                  </div>
+                </div>
+                <div class="currency-rate-input">
+                  <span class="currency-symbol">£</span>
+                  <input type="number" min="0" step="0.01" value="6.15" class="rate-input" id="gbp-rate">
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-actions">
+              <button class="btn-primary save-rates" id="save-rates">
+                <i data-lucide="save" class="btn-icon"></i>
+                حفظ التغييرات
+              </button>
+            </div>
+
+            @* <div class="admin-notification" id="notification"> *@
+            @*   <i data-lucide="check-circle"></i> *@
+            @*   <p>تم حفظ الأسعار بنجاح!</p> *@
+            @* </div> *@
+          </div>
+        </div>
+      </main>
+      
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-info">
+            <p>&copy; 2025 Libyan Currency Vista. كل الحقوق محفوظة.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
