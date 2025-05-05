@@ -10,6 +10,7 @@
 	LoginRequset requset { get; set; } 
 
 	bool isLoading = false;
+	string []Errors = [];
 
 	async Task handelSubmit()
 	{
@@ -21,6 +22,7 @@
 			Nav.NavigateTo("/");
 		}
 
+		Errors = response.ErrorList;
 	}
 
 	protected override void OnInitialized() => requset??=new();
@@ -43,6 +45,12 @@
 					<label for="password" class="form-label">كلمة المرور</label>
 					<InputText @bind-Value="requset.password" type="password" id="password" class="form-input" required/>
 				</div>
+				
+				@if(Errors.Any()){
+					<div class="validation-message">
+						اسم المستخدم او كلمة السر غير صحيحة
+					</div>
+				}
 
 				<button type="submit" class="btn-primary auth-submit">تسجيل الدخول</button>
 			</EditForm>

@@ -1,6 +1,7 @@
 using Currencey.Api.Mapping;
 using Currencey.Api.Repository;
 using Currencey.Contact;
+using Currency.Contact.Requset;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
@@ -19,12 +20,15 @@ public static class CurrencyEndpoint
             .WithTags("currency");
     }
     
-    static async Task<Results<Ok<decimal>,BadRequest>> Update([FromRoute]string id, decimal amount,[FromServices]ICurrencyRepository currencyRepository,IOutputCacheStore cacheStore, CancellationToken cancellationToken = default)
+    static async Task<Results<Ok,BadRequest>> Update([FromBody] UpdateCurrenciesRequset requset, [FromServices]ICurrencyRepository currencyRepository,IOutputCacheStore cacheStore, CancellationToken cancellationToken = default)
     {
-        if(await currencyRepository.UpdateCurrencyAsync(id, amount, cancellationToken))
+
+        var currency = requset.ToCurrencies().ToList();
+
+        if (await currencyRepository.UpdateCurrencyAsync(currency, cancellationToken))
         {
             await cacheStore.EvictByTagAsync("currency",cancellationToken);
-            return TypedResults.Ok(amount);
+            return TypedResults.Ok();
         }
         return TypedResults.BadRequest();
     }
@@ -33,7 +37,7 @@ public static class CurrencyEndpoint
     {
         var currencies = await currencyRepository.GetCurrenciesAsync(cancellationToken);
         var response = currencies.ToCurrencyResponse();
-        return TypedResults.Ok(response);
+        return Results.Ok(response);
     }
     
 }

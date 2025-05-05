@@ -58,7 +58,7 @@ public class CookieAuthenticationStateProvider(IHttpClientFactory httpClientFact
     {
         try
         {
-            var Result = await _httpClient.PostAsJsonAsync("api/login?useCookie=true", new
+            var Result = await _httpClient.PostAsJsonAsync(ApiRoute.login, new
             {
                 loginModel.username,
                 loginModel.password,
@@ -79,7 +79,7 @@ public class CookieAuthenticationStateProvider(IHttpClientFactory httpClientFact
         return new AuthResult
         {
             Succeede = false,
-            ErrorList = ["Invalid email or password"]
+            ErrorList = ["Invalid username or password"]
         };
     }
 

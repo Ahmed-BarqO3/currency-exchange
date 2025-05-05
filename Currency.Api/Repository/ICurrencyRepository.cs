@@ -1,13 +1,9 @@
-using Currencey.Api.Database;
-using Currencey.Api.Entity;
-using Dapper;
-
 namespace Currencey.Api.Repository;
 
 public interface ICurrencyRepository
 {
-    Task<bool> UpdateCurrencyAsync(string id, decimal amount,CancellationToken cancellationToken = default);
-    Task<IEnumerable<Currency>> GetCurrenciesAsync(CancellationToken cancellationToken = default);
+    Task<bool> UpdateCurrencyAsync(List<Entity.Currency> currencies,CancellationToken cancellationToken = default);
+    Task<IEnumerable<Entity.Currency>> GetCurrenciesAsync(CancellationToken cancellationToken = default);
 }
 
 

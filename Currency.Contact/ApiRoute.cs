@@ -14,6 +14,6 @@ public static class ApiRoute
         const string Base = Api + "currency";
         public const string GetAll = Base;
         public const string GetById = Base + "/{id}";
-        public const string Update = Base + "/{id}";
+        public const string Update = Base;
     }
 }

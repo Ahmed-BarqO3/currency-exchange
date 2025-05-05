@@ -16,9 +16,9 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByUsernameAsync(string username,CancellationToken cancellationToken = default)
     {
         using var connection = await _db.CreateConnectionAsync(cancellationToken);
-        return await connection.QueryFirstAsync<User?>(new CommandDefinition($"""
+        return await connection.QueryFirstOrDefaultAsync<User?>(new CommandDefinition($"""
                                                                         SELECT * FROM users
-                                                                        WHERE username = @username
+                                                                        WHERE users.username = @username
                                                                         """, new {username},cancellationToken: cancellationToken));
     }
 }

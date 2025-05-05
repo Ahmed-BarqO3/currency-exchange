@@ -1,5 +1,33 @@
 ﻿@page "/"
+@using Currencey.Contact.Response
+@using Currency.Contact.Requset
+@using Currency.Wasm.Models
 @attribute [Authorize]
+@inject ICurrency currency
+
+
+@code
+{
+	protected override async Task OnInitializedAsync()
+	{
+		items = new();
+		requsets = new();
+		items = await currency.GetCurrencies();
+	}
+
+	List<CurrencyResponse> items;
+	UpdateCurrenciesRequset requsets;
+
+	private async Task UpdateCurrency()
+	{
+		if (requsets.items.Count() == 0)
+			return;
+		
+		await currency.Update(requsets);
+		requsets.items = [];
+		StateHasChanged();
+	}
+}
 
 <PageTitle>Home</PageTitle>
 
@@ -11,33 +39,36 @@
           <div class="logo">
             <span class="logo-text">Libyan Currency Vista</span>
           </div>
-          <nav class="nav">
-            <ul class="nav-list">
-              <li><a href="index.html" class="nav-link">الرئيسية</a></li>
-              <li><a href="profile.html" class="nav-link">الملف الشخصي</a></li>
-            </ul>
-          </nav>
+          @* <nav class="nav"> *@
+          @*   <ul class="nav-list"> *@
+          @*     <li><a href="index.html" class="nav-link">الرئيسية</a></li> *@
+          @*     <li><a href="profile.html" class="nav-link">الملف الشخصي</a></li> *@
+          @*   </ul> *@
+          @* </nav> *@
+			
+				<nav class="nav">
           <div class="auth">
             <div class="user-menu">
               <div class="user-icon" id="userMenuBtn">
                 <i data-lucide="user-round"></i>
               </div>
               <div class="dropdown-menu" id="userDropdown">
-                <a href="profile.html" class="dropdown-item">
+                <NavLink href="" class="dropdown-item">
                   <i data-lucide="user"></i>
                   الملف الشخصي
-                </a>
-                <a href="change-password.html" class="dropdown-item">
+                </NavLink>>
+                <NavLink href="" class="dropdown-item">
                   <i data-lucide="lock"></i>
                   تغيير كلمة المرور
-                </a>
-                <a href="login.html" class="dropdown-item logout">
+                </NavLink>
+							<NavLink href="login.html" class="dropdown-item logout">
                   <i data-lucide="log-out"></i>
                   تسجيل الخروج
-                </a>
+                </NavLink>
               </div>
             </div>
           </div>
+			</nav>
         </div>
       </header>
 
@@ -53,68 +84,47 @@
               <p class="admin-subtitle">قم بتعديل أسعار العملات مقابل الدينار الليبي</p>
             </div>
 
-            <div class="currency-editor">
-              <!-- USD -->
-              <div class="currency-edit-item">
-                <div class="currency-info">
-                  <span class="currency-flag">🇺🇸</span>
-                  <div class="currency-details">
-                    <h3 class="currency-name">الدولار الأمريكي</h3>
-                    <p class="currency-code">USD</p>
-                  </div>
-                </div>
-                <div class="currency-rate-input">
-                  <span class="currency-symbol">$</span>
-                  <input type="number" min="0" step="0.01" value="4.85" class="rate-input" id="usd-rate">
-                </div>
-              </div>
+					<EditForm class="currency-editor" Model="requsets" OnSubmit="UpdateCurrency">
+					@if (items.Any())
+					{
+						@foreach (var item in items)
+						{
+							<!-- Card -->
+							<div class="currency-edit-item">
+								<div class="currency-info">
+									<span class="currency-flag">@item.id.ToString().Substring(0, 2)</span>
+									<div class="currency-details">
+										<h3 class="currency-name">@item.name</h3>
+										<p class="currency-code">@item.id</p>
+									</div>
+								</div>
+								<div class="currency-rate-input">
+									<span class="currency-symbol">@item.symbol</span>
+									<InputNumber @bind-Value="item.amount" min="1" step="0.01" class="rate-input" id="usd-rate" />
+								</div>
+							</div>
 
-              <!-- EUR -->
-              <div class="currency-edit-item">
-                <div class="currency-info">
-                  <span class="currency-flag">🇪🇺</span>
-                  <div class="currency-details">
-                    <h3 class="currency-name">اليورو</h3>
-                    <p class="currency-code">EUR</p>
-                  </div>
-                </div>
-                <div class="currency-rate-input">
-                  <span class="currency-symbol">€</span>
-                  <input type="number" min="0" step="0.01" value="5.25" class="rate-input" id="eur-rate">
-                </div>
-              </div>
+								requsets.items = requsets.items.Append(new UpdateCurrencyRequset(item.id, item.amount));
+						}
 
-              <!-- GBP -->
-              <div class="currency-edit-item">
-                <div class="currency-info">
-                  <span class="currency-flag">🇬🇧</span>
-                  <div class="currency-details">
-                    <h3 class="currency-name">الجنيه الإسترليني</h3>
-                    <p class="currency-code">GBP</p>
-                  </div>
-                </div>
-                <div class="currency-rate-input">
-                  <span class="currency-symbol">£</span>
-                  <input type="number" min="0" step="0.01" value="6.15" class="rate-input" id="gbp-rate">
-                </div>
-              </div>
-            </div>
+						<div class="admin-actions">
+							<button type="submit"  class="btn-primary save-rates" id="save-rates">
+								<i data-lucide="save" class="btn-icon"></i>
+								حفظ التغييرات
+							</button>
+						</div>
+					}
+					</EditForm>
 
-            <div class="admin-actions">
-              <button class="btn-primary save-rates" id="save-rates">
-                <i data-lucide="save" class="btn-icon"></i>
-                حفظ التغييرات
-              </button>
-            </div>
+						@* <div class="admin-notification" id="notification"> *@
+						@*   <i data-lucide="check-circle"></i> *@
+						@*   <p>تم حفظ الأسعار بنجاح!</p> *@
+						@* </div> *@
+					</div>	
+				</div>
+	</main>
+				
 
-            @* <div class="admin-notification" id="notification"> *@
-            @*   <i data-lucide="check-circle"></i> *@
-            @*   <p>تم حفظ الأسعار بنجاح!</p> *@
-            @* </div> *@
-          </div>
-        </div>
-      </main>
-      
       <!-- Footer -->
       <footer class="footer">
         <div class="footer-content">
@@ -124,3 +134,8 @@
         </div>
       </footer>
     </div>
+
+
+					<script>
+	lucide.createIcons();
+					</script>

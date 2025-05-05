@@ -40,9 +40,16 @@ public static class AuthEndpoint
         context.Response.Cookies.Delete("X-Access-Token");
         return Task.FromResult(Results.NoContent());
     }
-    
-    static  Task<IResult> CreateToken(IConfiguration config,LoginRequset request,HttpContext context,CancellationToken cancellationToken = default)
+
+    static async Task<Results<Ok,BadRequest>> CreateToken(IConfiguration config, [FromBody] LoginRequset request,[FromServices] IUserRepository userRepository,HttpContext context,CancellationToken cancellationToken = default)
     {
+
+        var user = await userRepository.GetByUsernameAsync(request.username, cancellationToken);
+
+        if(user is  null || user?.password != request.password)
+            return TypedResults.BadRequest();
+
+
         var token = new JsonWebTokenHandler();
         var key = config["Jwt:Key"];
 
@@ -84,7 +91,7 @@ public static class AuthEndpoint
                 Secure = true,
                 SameSite = SameSiteMode.Strict,
             });
-            return Task.FromResult(Results.Ok());
+            return TypedResults.Ok();
     }
     
 }
