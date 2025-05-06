@@ -1,9 +1,11 @@
 ﻿@page "/"
+@using Blazored.Toast.Services
 @using Currencey.Contact.Response
 @using Currency.Contact.Requset
 @using Currency.Wasm.Models
 @attribute [Authorize]
-@inject ICurrency currency
+@inject ICurrencyApi CurrencyApi
+@inject IToastService ToastService
 
 
 @code
@@ -12,7 +14,7 @@
 	{
 		items = new();
 		requsets = new();
-		items = await currency.GetCurrencies();
+		items = await CurrencyApi.GetCurrencies();
 	}
 
 	List<CurrencyResponse> items;
@@ -23,9 +25,18 @@
 		if (requsets.items.Count() == 0)
 			return;
 		
-		await currency.Update(requsets);
-		requsets.items = [];
-		StateHasChanged();
+		var result = await CurrencyApi.Update(requsets);
+		if (result.IsSuccessStatusCode)
+		{
+			StateHasChanged();
+			requsets.items = [];
+			ToastService.ShowSuccess("تم حفظ الأسعار بنجاح");
+		}
+		else
+		{
+			ToastService.ShowError("فشلت العملية");
+		}
+
 	}
 }
 

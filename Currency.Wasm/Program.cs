@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using Currency.Blazor.Identity;
 using Currency.Wasm;
 using Currency.Wasm.Models;
@@ -11,7 +12,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 
-
+builder.Services.AddBlazoredToast();
 builder.Services.AddTransient<CookieHandler>();
 builder.Services.AddScoped<AuthenticationStateProvider, CookieAuthenticationStateProvider>();
 builder.Services.AddScoped(sp => (IAccountManagment)sp.GetRequiredService<AuthenticationStateProvider>());
@@ -24,7 +25,12 @@ builder.Services.AddHttpClient("Auth", client =>
 }).AddHttpMessageHandler<CookieHandler>();
 
 
-builder.Services.AddRefitClient<ICurrency>().ConfigureHttpClient(o =>
+builder.Services.AddRefitClient<ICurrencyApi>().ConfigureHttpClient(o =>
+{
+    o.BaseAddress = new Uri("https://localhost:7153");
+}).AddHttpMessageHandler<CookieHandler>();
+
+builder.Services.AddRefitClient<IUserApi>().ConfigureHttpClient(o =>
 {
     o.BaseAddress = new Uri("https://localhost:7153");
 }).AddHttpMessageHandler<CookieHandler>();
