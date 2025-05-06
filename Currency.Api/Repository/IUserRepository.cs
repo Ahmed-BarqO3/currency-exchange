@@ -4,5 +4,6 @@ namespace Currencey.Api.Repository;
 
 public interface IUserRepository
 {
-    Task<User?> GetByUsernameAsync(string username,CancellationToken cancellationToken = default);
+    Task<bool> ChangePasswordAsync(string username, string newPassword, CancellationToken token = default);
+    Task<User?> GetByUsernameAsync(string username,CancellationToken token = default);
 }

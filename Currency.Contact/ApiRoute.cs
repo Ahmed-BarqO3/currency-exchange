@@ -6,6 +6,7 @@ public static class ApiRoute
     
     public const string login = Api + "login";
     public const string logout = Api + "logout";
+    public const string changepassword = Api + "changepassword";
     public const string currentUser = Api + "me";
     
     

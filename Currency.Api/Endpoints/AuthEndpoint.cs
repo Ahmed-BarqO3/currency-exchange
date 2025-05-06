@@ -6,6 +6,7 @@ using Currencey.Api.Repository;
 using Currencey.Contact;
 using Currencey.Contact.Requset;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -20,11 +21,30 @@ public static class AuthEndpoint
         app.MapPost(ApiRoute.logout, Logout);
         app.MapGet(ApiRoute.currentUser, GetUser)
             .RequireAuthorization();
+        
+        app.MapPut(ApiRoute.changepassword,ChangePassword)
+            .RequireAuthorization();
     }
 
 
-
-    static async Task<Results<Ok<User>, NotFound>> GetUser(this ClaimsPrincipal claims,HttpContext http,[FromServices]IUserRepository userRepository, CancellationToken token = default)
+    static async Task<Results<Ok,BadRequest>> ChangePassword(HttpContext http, [FromBody] ChangePasswordRequset requset,
+        [FromServices] IUserRepository userRepository, CancellationToken token = default)
+    {
+        var username = http.User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Name)?.Value;
+        
+        var user  = await userRepository.GetByUsernameAsync(username!, token);
+        
+        
+        var res = new PasswordHasher<User>().VerifyHashedPassword(user!, user!.password, requset.oldPassword);
+        if (res == PasswordVerificationResult.Failed) return TypedResults.BadRequest();
+        
+        user!.password = new PasswordHasher<User>().HashPassword(user, requset.newPassword);
+        var result = await userRepository.ChangePasswordAsync(user.username,user.password, token);
+        return result? TypedResults.Ok(): TypedResults.BadRequest();
+    }
+    
+    
+    static async Task<Results<Ok<User>, NotFound>> GetUser(HttpContext http,[FromServices]IUserRepository userRepository, CancellationToken token = default)
     {
         var username = http.User.Claims.FirstOrDefault(c=>c.Type == JwtRegisteredClaimNames.Name)?.Value;
         if (string.IsNullOrEmpty(username))
@@ -45,9 +65,14 @@ public static class AuthEndpoint
     {
 
         var user = await userRepository.GetByUsernameAsync(request.username, cancellationToken);
+        
 
-        if(user is  null || user?.password != request.password)
+        if(user is  null)
             return TypedResults.BadRequest();
+        
+        var hash = new PasswordHasher<User>().VerifyHashedPassword(user,user.password, request.password);
+        if(hash == PasswordVerificationResult.Failed)
+            return TypedResults.BadRequest();   
 
 
         var token = new JsonWebTokenHandler();

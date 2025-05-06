@@ -1,3 +1,4 @@
+using Currencey.Contact.Requset;
 using Currencey.Contact.Response;
 using Currency.Contact.Requset;
 
@@ -12,6 +13,14 @@ public static class MappingExtensions
     public static IEnumerable<CurrencyResponse> ToCurrencyResponse(this IEnumerable<Entity.Currency> currencies)
     {
         return currencies.Select(c => c.ToCurrencyResponse());
+    }
+
+    public static Entity.Currency ToCurrency(this ChangePasswordRequset requset)
+    {
+        return new Entity.Currency
+        {
+            password = requset.newPassword
+        };
     }
 
     public static IEnumerable<Entity.Currency>  ToCurrencies(this UpdateCurrenciesRequset requset)

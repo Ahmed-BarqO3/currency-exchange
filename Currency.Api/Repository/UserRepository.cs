@@ -13,12 +13,21 @@ public class UserRepository : IUserRepository
         _db = db;
     }
 
-    public async Task<User?> GetByUsernameAsync(string username,CancellationToken cancellationToken = default)
+    public async Task<bool> ChangePasswordAsync(string username, string password, CancellationToken token = default)
     {
-        using var connection = await _db.CreateConnectionAsync(cancellationToken);
+        using var connection = await _db.CreateConnectionAsync(token);
+        return await connection.ExecuteAsync(new CommandDefinition($"""
+                                UPDATE users Set password = @password
+                                WHERE username = @username
+                                """, new { username, password  }, cancellationToken: token)) > 0;
+    }   
+
+    public async Task<User?> GetByUsernameAsync(string username,CancellationToken token = default)
+    {
+        using var connection = await _db.CreateConnectionAsync(token);
         return await connection.QueryFirstOrDefaultAsync<User?>(new CommandDefinition($"""
-                                                                        SELECT * FROM users
-                                                                        WHERE users.username = @username
-                                                                        """, new {username},cancellationToken: cancellationToken));
+                                SELECT * FROM users
+                                WHERE username = @username
+                                """, new { username }, cancellationToken: token));
     }
 }
