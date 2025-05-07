@@ -17,22 +17,26 @@ builder.Services.AddTransient<CookieHandler>();
 builder.Services.AddScoped<AuthenticationStateProvider, CookieAuthenticationStateProvider>();
 builder.Services.AddScoped(sp => (IAccountManagment)sp.GetRequiredService<AuthenticationStateProvider>());
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+
+
+var ApiUrl = "https://localhost:7153";
 
 builder.Services.AddHttpClient("Auth", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7153");
+    client.BaseAddress = new Uri(ApiUrl);
 }).AddHttpMessageHandler<CookieHandler>();
 
 
 builder.Services.AddRefitClient<ICurrencyApi>().ConfigureHttpClient(o =>
 {
-    o.BaseAddress = new Uri("https://localhost:7153");
+    o.BaseAddress = new Uri(ApiUrl);
 }).AddHttpMessageHandler<CookieHandler>();
 
 builder.Services.AddRefitClient<IUserApi>().ConfigureHttpClient(o =>
 {
-    o.BaseAddress = new Uri("https://localhost:7153");
+    o.BaseAddress = new Uri(ApiUrl);
 }).AddHttpMessageHandler<CookieHandler>();
 
 
