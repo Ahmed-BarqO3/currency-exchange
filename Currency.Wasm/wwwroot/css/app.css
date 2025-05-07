@@ -229,6 +229,110 @@ a {
         color: var(--primary);
     }
 
+
+/* Loading Screen Styles */
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--navy-black);
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-container.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.loading-logo {
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(to right, var(--primary-yellow), var(--secondary-yellow));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.loading-spinner {
+    margin-bottom: 1.5rem;
+}
+
+.spinner-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--primary-yellow);
+    animation: spin 1.5s linear infinite;
+}
+
+.loading-text {
+    font-size: 1.2rem;
+    color: var(--slate);
+    animation: fadeInOut 1.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 1.5rem;
+    }
+
+    .spinner-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .loading-text {
+        font-size: 1rem;
+    }
+}
+
 /* User Menu Dropdown - Fixed */
 .user-menu {
     position: relative;
@@ -247,7 +351,7 @@ a {
     border: 2px solid var(--primary);
     transition: all 0.3s ease;
     position: relative;
-    z-index: 101;
+    z-index: 110;
 }
 
     .user-icon:hover {

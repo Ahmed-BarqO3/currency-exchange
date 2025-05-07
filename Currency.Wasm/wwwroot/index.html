@@ -18,11 +18,19 @@
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-container">
+            <div class="loading-content">
+                <div class="loading-logo">
+                    <span class="logo-text">Libyan Currency Vista</span>
+                </div>
+                <div class="loading-spinner">
+                    <i data-lucide="loader" class="spinner-icon"></i>
+                </div>
+                <p class="loading-text">جاري تحميل ...</p>
+            </div>
+        </div>
+        
     </div>
 
     <div id="blazor-error-ui">

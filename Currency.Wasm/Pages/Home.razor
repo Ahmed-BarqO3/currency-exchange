@@ -1,11 +1,12 @@
 ﻿@page "/"
-@using Blazored.Toast.Services
 @using Currencey.Contact.Response
 @using Currency.Contact.Requset
-@using Currency.Wasm.Models
-@attribute [Authorize]
 @inject ICurrencyApi CurrencyApi
 @inject IToastService ToastService
+@inject IAccountManagment Account
+@inject NavigationManager Nav
+
+@attribute [Authorize]
 
 
 @code
@@ -19,10 +20,12 @@
 
 	List<CurrencyResponse> items;
 	UpdateCurrenciesRequset requsets;
+    
+    bool IsMenuOpen = false;
 
 	private async Task UpdateCurrency()
 	{
-		if (requsets.items.Count() == 0)
+		if (requsets.items.Any())
 			return;
 		
 		var result = await CurrencyApi.Update(requsets);
@@ -38,6 +41,12 @@
 		}
 
 	}
+
+    async Task Logout()
+    {
+        await Account.LogoutAsync();
+        Nav.NavigateTo("/login");
+    }
 }
 
 <PageTitle>Home</PageTitle>
@@ -50,36 +59,31 @@
           <div class="logo">
             <span class="logo-text">Libyan Currency Vista</span>
           </div>
-          @* <nav class="nav"> *@
-          @*   <ul class="nav-list"> *@
-          @*     <li><a href="index.html" class="nav-link">الرئيسية</a></li> *@
-          @*     <li><a href="profile.html" class="nav-link">الملف الشخصي</a></li> *@
-          @*   </ul> *@
-          @* </nav> *@
+
+            <nav class="nav">
+                <div class="auth">
+                    <div class="user-menu">
+                        <div class="user-icon" @onclick="() => IsMenuOpen = !IsMenuOpen">
+                            <i data-lucide="square-menu"></i>
+                        </div>
+                        <div class="dropdown-menu @(IsMenuOpen?"show":"")">
+                            <NavLink href="/" class="dropdown-item">
+                                <i data-lucide="currency"></i>
+                                العملات
+                            </NavLink>
+                            <a href="/changePassword" class="dropdown-item">
+                                <i data-lucide="lock"></i>
+                                تغيير كلمة المرور
+                            </a>
+                            <NavLink @onclick="Logout" class="dropdown-item logout">
+                                <i data-lucide="log-out"></i>
+                                تسجيل الخروج
+                            </NavLink>
+                        </div>
+                    </div>
+                </div>
+            </nav>
 			
-				<nav class="nav">
-          <div class="auth">
-            <div class="user-menu">
-              <div class="user-icon" id="userMenuBtn">
-                <i data-lucide="user-round"></i>
-              </div>
-              <div class="dropdown-menu" id="userDropdown">
-                <NavLink href="" class="dropdown-item">
-                  <i data-lucide="user"></i>
-                  الملف الشخصي
-                </NavLink>>
-                <NavLink href="" class="dropdown-item">
-                  <i data-lucide="lock"></i>
-                  تغيير كلمة المرور
-                </NavLink>
-							<NavLink href="login.html" class="dropdown-item logout">
-                  <i data-lucide="log-out"></i>
-                  تسجيل الخروج
-                </NavLink>
-              </div>
-            </div>
-          </div>
-			</nav>
         </div>
       </header>
 
@@ -145,7 +149,6 @@
         </div>
       </footer>
     </div>
-
 
 					<script>
 	lucide.createIcons();
