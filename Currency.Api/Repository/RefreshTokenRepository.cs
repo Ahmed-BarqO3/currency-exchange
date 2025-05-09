@@ -48,13 +48,13 @@ public class RefreshTokenRepository : IRefreshTokenRepository
         return await connection.ExecuteScalarAsync<bool>(new CommandDefinition(sql, new { token }, cancellationToken: cancellationToken));
     }
 
-    public async Task<bool> DeleteRefreshTokenAsync(string token, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteRefreshTokenForUserAsync(Guid userid, CancellationToken cancellationToken = default)
     {
         using var connection = await _db.CreateConnectionAsync(cancellationToken);
         var sql = $"""
-                   DELETE FROM refresh_tokens WHERE token = @token;
+                   DELETE FROM refresh_tokens WHERE userid = @userid;
                    """;
-        return await connection.ExecuteAsync(new CommandDefinition(sql, new { token }, cancellationToken: cancellationToken)) > 0;
+        return await connection.ExecuteAsync(new CommandDefinition(sql, new { userid }, cancellationToken: cancellationToken)) > 0;
     }
 
     public async Task<string?> GetRefreshTokenAsync(string token, CancellationToken cancellationToken = default)

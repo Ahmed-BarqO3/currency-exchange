@@ -121,6 +121,13 @@ public static class AuthEndpoint
 
         await tokenRepository.AddAsync(refreshToken, cancellationToken);
 
+        context.Response.Cookies.Append("X-Access-Token", jwt, new CookieOptions()
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+        });
+
         context.Response.Cookies.Append("X-Refresh-Token", refreshToken.token,
             new CookieOptions() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.None, });
 
@@ -179,16 +186,21 @@ public static class AuthEndpoint
                         : Guid.Empty
                 };
 
+                await tokenRepository.DeleteRefreshTokenForUserAsync(newRefreshToken.userid, token);
                 if (await tokenRepository.AddAsync(newRefreshToken, token))
 
                     await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
                        new AuthenticationProperties { IsPersistent = false });
 
+                context.Response.Cookies.Append("X-Access-Token", jwt, new CookieOptions()
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                });
+
                 context.Response.Cookies.Append("X-Refresh-Token", newRefreshToken.token,
                     new CookieOptions() { HttpOnly = true, Secure = true, SameSite = SameSiteMode.None, });
-
-
-                await tokenRepository.DeleteRefreshTokenAsync(request.RefreshToken, token);
 
                 return TypedResults.Ok();
             }
