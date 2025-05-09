@@ -17,6 +17,7 @@ public static class ServiceExtensions
     {
         services.AddScoped<ICurrencyRepository, CurrencyRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         return services;
     }
     

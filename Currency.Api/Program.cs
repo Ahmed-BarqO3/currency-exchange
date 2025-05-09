@@ -2,7 +2,9 @@ using System.Text;
 using Currencey.Api;
 using Currencey.Api.Database;
 using Currencey.Api.Endpoints;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
@@ -16,13 +18,12 @@ builder.Services.AddRepositories();
 
 builder.Services.AddAuthentication(i =>
 {
-    i.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     i.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     i.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    i.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+    i.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
 }).AddJwtBearer(x =>
-{ 
+{
     x.RequireHttpsMetadata = false;
     x.SaveToken = true;
     x.TokenValidationParameters = new()
@@ -39,26 +40,34 @@ builder.Services.AddAuthentication(i =>
     };
 
     x.Events = new();
-    x.Events.OnMessageReceived = context => {
-       
-            if (string.IsNullOrEmpty(context.Token))
-            {
-                context.Token = context.Request.Cookies["X-Access-Token"];
-            }
-            return Task.CompletedTask;
+    x.Events.OnMessageReceived = context =>
+    {
+
+        if (context.Request.Cookies.TryGetValue("X-Access-Token", out var token))
+        {
+            context.Token = token;
+        }
+        return Task.CompletedTask;
     };
 }).AddCookie(options =>
 {
-    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.Name = "X-Access-Token";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.IsEssential = true;
+
+    options.Events.OnSigningOut = context =>
+    {
+        context.Response.Cookies.Delete("X-Refresh-Token");
+        return Task.CompletedTask;
+    };
 
 });
 builder.Services.AddCors(builder =>
 {
-    builder.AddDefaultPolicy( options =>
+    builder.AddDefaultPolicy(options =>
     {
-        options.WithOrigins("https://localhost:7126")
+        options.WithOrigins(config.GetValue<string>("client")!)
             .AllowCredentials()
             .AllowAnyMethod()
             .AllowAnyHeader();
@@ -67,7 +76,6 @@ builder.Services.AddCors(builder =>
 
 builder.Services.AddOutputCache(o =>
 {
-    o.AddBasePolicy(c => c.Cache());
     o.AddPolicy("currencyCache", c =>
     {
         c.Cache();
@@ -75,7 +83,7 @@ builder.Services.AddOutputCache(o =>
         c.Tag("currency");
     });
 });
-
+builder.Services.AddHealthChecks();
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
@@ -89,8 +97,26 @@ if (app.Environment.IsDevelopment())
 var dbInitializer = app.Services.GetRequiredService<DBInitializer>();
 await dbInitializer.InitializeAsync();
 
-
+app.MapHealthChecks("_health");
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler(app =>
+{
+    app.Run(async context =>
+    {
+        context.Response.StatusCode = 500;
+        context.Response.ContentType = "application/json";
+        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+        if (contextFeature is not null)
+        {
+            await context.Response.WriteAsJsonAsync(new
+            {
+                StatusCode = context.Response.StatusCode,
+                Message = "Internal Server Error"
+            });
+        }
+    });
+});
 
 app.UseCors();
 app.UseOutputCache();

@@ -10,7 +10,7 @@ public class DBInitializer
     {
         _dbConnection = dbConnection;
     }
-    
+
     public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
         using var connection = await _dbConnection.CreateConnectionAsync(cancellationToken);
@@ -30,7 +30,7 @@ public class DBInitializer
             IF NOT EXISTS (SELECT 1 FROM currency) THEN
                 INSERT INTO currency (id, name, symbol, amount, update_at)
                 VALUES
-                    ('USD', 'دولارامريكي', '$', 7.11, NOW() + INTERVAL '2 hours'),
+                    ('USD', 'الدولار الأمريكي', '$', 7.11, NOW() + INTERVAL '2 hours'),
                     ('EUR', 'يورو', '€', 7.92, NOW() + INTERVAL '2 hours');
             END IF;
         END;
@@ -54,7 +54,21 @@ public class DBInitializer
                                           password VARCHAR(256) NOT NULL
                                       );
                                       """);
-        
+
+
+        await connection.ExecuteAsync("""
+                                      Create Table IF NOT EXISTS refresh_tokens (
+                                          token text PRIMARY KEY,
+                                          jwtid text NOT NULL,
+                                          creation TIMESTAMP WITH TIME ZONE  NOT NULL,
+                                          expiration TIMESTAMP WITH TIME ZONE NOT NULL,
+                                          used BOOLEAN NOT NULL,
+                                          invalidate BOOLEAN NOT NULL,
+                                          userid uuid NOT NULL,
+                                          FOREIGN KEY (userid) REFERENCES users(id)
+                                      );
+                                      """);
+
         await connection.ExecuteAsync("""
                                         -- Create a trigger function
                                       CREATE OR REPLACE FUNCTION insert_ON_UpdateCurrency()
