@@ -8,15 +8,25 @@
     <base href="/" />
     <link rel="stylesheet" href="css/app.css" />
     <!-- If you add any scoped CSS files, uncomment the following to load them-->
-    <link href="Currency.Wasm.styles.css" rel="stylesheet" /> 
+    <link href="Currency.Wasm.styles.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://unpkg.com/lucide-icons/dist/umd/lucide.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+
+
+    <script>
+        window.createIcons = () => {
+            lucide.createIcons();
+        };
+    </script>
+
 </head>
 
 <body>
+    
+
     <div id="app">
         <!-- Loading Screen -->
         <div id="loading-screen" class="loading-container">
@@ -30,7 +40,7 @@
                 <p class="loading-text">جاري تحميل ...</p>
             </div>
         </div>
-        
+
     </div>
 
     <div id="blazor-error-ui">

@@ -17,16 +17,16 @@ builder.Services.AddTransient<CookieHandler>();
 builder.Services.AddScoped<AuthenticationStateProvider, CookieAuthenticationStateProvider>();
 builder.Services.AddScoped(sp => (IAccountManagment)sp.GetRequiredService<AuthenticationStateProvider>());
 
+
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-
-
-var ApiUrl = "https://localhost:7153";
+var ApiUrl = "https://localhost:7153"; //"https://currency-api.azurewebsites.net";
 
 builder.Services.AddHttpClient("Auth", client =>
 {
     client.BaseAddress = new Uri(ApiUrl);
 }).AddHttpMessageHandler<CookieHandler>();
+
 
 
 builder.Services.AddRefitClient<ICurrencyApi>().ConfigureHttpClient(o =>
@@ -41,5 +41,6 @@ builder.Services.AddRefitClient<IUserApi>().ConfigureHttpClient(o =>
 
 
 builder.Services.AddAuthorizationCore();
+
 
 await builder.Build().RunAsync();

@@ -29,22 +29,31 @@ public class CookieAuthenticationStateProvider(IHttpClientFactory httpClientFact
         try
         {
             var userResponse = await _httpClient.GetAsync(ApiRoute.currentUser);
-            userResponse.EnsureSuccessStatusCode();
 
-            var userJson = await userResponse.Content.ReadAsStringAsync();
-            var userInfo = JsonSerializer.Deserialize<UserInfo>(userJson, _jsonSerializerOptions);
-
-            if (userInfo is not null)
+            if (!userResponse.IsSuccessStatusCode)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email, userInfo.username),
-                };
-
-                var identity = new ClaimsIdentity(claims, nameof(CookieAuthenticationStateProvider));
-                user = new ClaimsPrincipal(identity);
-                _authenticated = true;
+                var refresh = await _httpClient.PostAsync(ApiRoute.refreshToken, content: null);
+                if(refresh.IsSuccessStatusCode)
+                NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
             }
+            
+
+                var userJson = await userResponse.Content.ReadAsStringAsync();
+                var userInfo = JsonSerializer.Deserialize<UserInfo>(userJson, _jsonSerializerOptions);
+
+                if (userInfo is not null)
+                {
+                    var claims = new List<Claim>
+                    {
+                    new Claim(ClaimTypes.Email, userInfo.username),
+                    };
+
+                    var identity = new ClaimsIdentity(claims, nameof(CookieAuthenticationStateProvider));
+                    user = new ClaimsPrincipal(identity);
+                    _authenticated = true;
+                }
+            
+            
         }
         catch
         {

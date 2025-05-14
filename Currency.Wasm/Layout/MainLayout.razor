@@ -1,8 +1,16 @@
 ﻿@inherits LayoutComponentBase
-@using Blazored.Toast
+@inject IJSRuntime JSRuntime
 
-
-<BlazoredToasts />
+<Blazored.Toast.BlazoredToasts />
 
 
 @Body
+
+@code {
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	
+		=>	await JSRuntime.InvokeVoidAsync("createIcons");
+		
+	
+}
